@@ -40,6 +40,8 @@ function sendData(userObj){
         return response.json();
     })
     .then((data) =>{
-        alert(data.message);
+        if(data.message == 200){
+            window.location.href = '/login';
+        }
     });
 }

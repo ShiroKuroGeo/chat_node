@@ -33,11 +33,11 @@ app.get("/register", (req, res) => {
     res.sendFile(__dirname + "/chat_system/authentication/register/register.html");
 });
 
-app.get("/friendList", (req,res) =>{
+app.get("/friendList", (req, res) => {
     res.sendFile(__dirname + "/chat_system/conversation.html");
 });
 
-app.get("/chat", (req,res) =>{
+app.get("/chat", (req, res) => {
     res.sendFile(__dirname + "/chat_system/chat.html");
 });
 
@@ -47,11 +47,15 @@ app.get("/friendList/:id", (req, res) => {
     con.query(friendList(), [id], (err, result) => { if (!err) { return res.status(200).json(result); } return res.status(500).json({ message: "Server Error" }); });
 });
 
-app.get("/chat/:sender/:reciever", (req, res) => {
-    let sender = req.params.sender;
-    let reciever = req.params.reciever;
+app.get("/chat/:id", (req, res) => {
+    let id = req.params.id;
 
-    con.query(message(), [reciever, sender], (err, result) => { if (!err) { return res.status(200).json(result); } return res.status(500).json({ message: "Server Error" }); });
+    con.query('SELECT * FROM messages', (err, result) => { 
+        if (!err) { 
+            return res.status(200).json(result); 
+        } 
+
+        return res.status(500).json({ message: "Server Error" }); });
 });
 
 
@@ -65,7 +69,8 @@ app.post("/login", (req, res) => {
 
         if (!err) {
             if (result.length > 0) {
-                return res.status(200).json({ message: 200, codeNumber: 1 });
+                const userId = result[0].username;
+                return res.status(200).json({ message: 'Success', codeNumber: userId });
             }
 
             return res.status(200).json({ message: "Invalid username or password", codeNumber: 0 });
@@ -104,36 +109,34 @@ app.post("/register", (req, res) => {
 
 });
 
-// io.on("connection", (socket) =>{
+io.on("connection", (socket) =>{
 
-//     socket.on("chat", (messageObj) =>{
+    socket.on("chat", (messageObj) =>{
 
-//         const { user_id, message_text } = messageObj;
+        const { username, message } = messageObj;
 
-//         console.log(messageObj);
+        const sql = "INSERT INTO `messages`(`username`, `message`) VALUES (?,?)";
 
-//         const sql = "INSERT INTO message(user_id, message_text) VALUES(?, ?)";
+        con.query(sql, [username, message], (err, result)=>{
 
-//         con.query(sql, [user_id, message_text], (err, result)=>{
+            if(!err){
+                io.emit("chat", messageObj);
+            }
+            else{
+                io.emit("chat", {username: '', message_text: "Server Error"});
+            }
 
-//             if(!err){
-//                 io.emit("chat", messageObj);
-//             }
-//             else{
-//                 io.emit("chat", {user_id: 0, message_text: "Server Error"});
-//             }
-
-//         });
+        });
 
 
-//     });
+    });
 
-//     socket.on("disconnect", ()=>{
-//         console.log("disconnected");
+    socket.on("disconnect", ()=>{
+        console.log("disconnected");
 
-//     });
+    });
 
-// });
+});
 
 
 server.listen(4000, () => {
@@ -146,10 +149,10 @@ function generateMD5Hash(data) {
     return hash.digest('hex');
 }
 
-function friendList(){
+function friendList() {
     return "SELECT user.user_id, user.friend_code, user.username, user.password, user.created_at, user.updated_at FROM `users` AS user RIGHT JOIN `friends` AS fr ON fr.friends_id = user.user_id WHERE fr.user_id = ?";
 }
 
-function message(){
+function message() {
     return "SELECT * FROM `messages` AS m LEFT JOIN `users` AS u ON m.reciever_id = u.user_id WHERE reciever_id = ? AND sender_id = ?";
 }

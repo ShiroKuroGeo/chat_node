@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2023 at 02:51 AM
+-- Generation Time: Dec 27, 2023 at 04:48 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,8 +51,7 @@ INSERT INTO `friends` (`frd_id`, `user_id`, `friends_id`, `created_at`) VALUES
 
 CREATE TABLE `messages` (
   `msg_id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `reciever_id` int(11) NOT NULL,
+  `username` varchar(125) NOT NULL,
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -62,8 +61,12 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`msg_id`, `sender_id`, `reciever_id`, `message`, `created_at`, `update_at`) VALUES
-(1, 1, 2, 'Hello world', '2023-11-25 01:29:51', '2023-11-25 01:29:51');
+INSERT INTO `messages` (`msg_id`, `username`, `message`, `created_at`, `update_at`) VALUES
+(15, 'shiro', 'Hello guys', '2023-12-27 03:26:19', '2023-12-27 03:26:19'),
+(16, 'shiro', 'Hi guys', '2023-12-27 03:31:37', '2023-12-27 03:31:37'),
+(17, 'kuro', 'ows', '2023-12-27 03:39:07', '2023-12-27 03:39:07'),
+(18, 'kuro', 'Hi hahahah', '2023-12-27 03:39:24', '2023-12-27 03:39:24'),
+(19, 'shiro', 'kamusta namo?', '2023-12-27 03:39:31', '2023-12-27 03:39:31');
 
 -- --------------------------------------------------------
 
@@ -85,9 +88,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `friend_code`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'j0L21zDMu8U', 'george', 'password', '2023-11-24 15:09:27', '2023-11-24 15:09:27'),
-(2, 'JZ2adWXJjPV', '123123', '123', '2023-11-24 15:10:56', '2023-11-24 15:10:56'),
-(3, '7hsP9Rc0kHS', 'shiro', '202cb962ac59075b964b07152d234b70', '2023-11-24 15:17:51', '2023-11-24 15:17:51');
+(3, '7hsP9Rc0kHS', 'shiro', '202cb962ac59075b964b07152d234b70', '2023-11-24 15:17:51', '2023-11-24 15:17:51'),
+(4, 'Z0NkehQzWHn', 'shiro', '202cb962ac59075b964b07152d234b70', '2023-12-27 01:59:55', '2023-12-27 01:59:55'),
+(5, 'RgF8h4e8BAR', 'kuro', '202cb962ac59075b964b07152d234b70', '2023-12-27 03:36:09', '2023-12-27 03:36:09');
 
 --
 -- Indexes for dumped tables
@@ -126,13 +129,13 @@ ALTER TABLE `friends`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

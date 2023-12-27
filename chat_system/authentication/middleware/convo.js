@@ -37,50 +37,50 @@ socket.on("connect", ()=>{
 });
 
        
-// socket.on("chat", (messageObj)=>{
+socket.on("chat", (messageObj)=>{
 
-//     const li = document.createElement("LI");
-//     li.classList.add(`bot__output`);
-//     li.classList.add(`bot__output--standard`);
+    const li = document.createElement("LI");
+    li.classList.add(`bot__output`);
+    li.classList.add(`bot__output--standard`);
     
-//     li.textContent = messageObj.message_text;
+    li.textContent = messageObj.message_text;
 
-//     document.querySelector("#chatlist").appendChild(li);
+    document.querySelector("#chatlist").appendChild(li);
 
-//     console.log(messageObj);
+    console.log(messageObj);
 
-// });
+});
 
-// const li = `<li class="bot__output bot__output--standard">Hey, I'm Navvy!</li>`;
+const li = `<li class="bot__output bot__output--standard">Hey, I'm Navvy!</li>`;
 
-// const chatBox = document.querySelector("#chatbox");
-// const sendBtn = document.querySelector("#sendbtn");
+const chatBox = document.querySelector("#chatbox");
+const sendBtn = document.querySelector("#sendbtn");
 
-// chatBox.addEventListener("keydown", handleSend);
-// sendBtn.addEventListener("click", handleClick);
+chatBox.addEventListener("keydown", handleSend);
+sendBtn.addEventListener("click", handleClick);
 
-// function handleSend(e){
+function handleSend(e){
 
     
     
-// }
+}
 
-// function handleClick(e){
-//     e.preventDefault();
+function handleClick(e){
+    e.preventDefault();
 
-//     const { user_id, user_name } = JSON.parse(localStorage.getItem("user"));
+    const { user_id, user_name } = JSON.parse(localStorage.getItem("user"));
 
 
 
-//     const chatBoxContent = document.querySelector("#chatbox").value;
+    const chatBoxContent = document.querySelector("#chatbox").value;
 
-//     console.log(chatBoxContent);
+    console.log(chatBoxContent);
 
-//     const messageObj = {
-//         user_id: user_id,
-//         user_name: user_name,
-//         message_text: chatBoxContent
-//     }
+    const messageObj = {
+        user_id: user_id,
+        user_name: user_name,
+        message_text: chatBoxContent
+    }
 
-//     socket.emit("chat", messageObj);
-// }
+    socket.emit("chat", messageObj);
+}

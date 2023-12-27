@@ -34,20 +34,12 @@ function sendData(userObj){
         return response.json();
     })
     .then((data) =>{
-       alert(data.message);
-        // if(data.codeNumber == 1){
-
-        //     const {user_id, user_name } = data.message[0];
-
-        //     console.log(data);
-
-        //     localStorage.setItem("user",JSON.stringify({user_id: user_id, user_name: user_name}));
-
-        //     window.location.replace("http://localhost:4000/main");
-        // }
-        // else{
-        //     alert(data.message);
-        // }
+        if(data.message == 'Success'){
+            window.location.href = `http://localhost:4000/chat?name=${data.codeNumber}`;
+        }
+        else{
+            alert(data.message);
+        }
     
     });
 }

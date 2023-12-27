@@ -1,37 +1,54 @@
 const socket = io();
 
-socket.on("connect", ()=>{
-    const url = "http://localhost:4000/chat/2/1";
-    fetch(url, {method: "GET"})
-    .then((response)=>{
-        return response.json();
-    })
-    .then((data) =>{
-        data.forEach(element => {
-            alert(element);
-            let friends = document.createElement('span');
-            friends.innerHTML += `
-            <a href="/chat" class="card border border-bottom text-reset">
-                <div class="card-body">
-                    <div class="row gx-5">
-                        <div class="col">
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="me-auto mb-0">${element.username}</h5>
-                                <span class="text-muted extra-small ms-2">12:45 PM</span>
-                            </div>
 
-                            <div class="d-flex align-items-center">
-                                <div class="line-clamp me-auto">
-                                    ${element.message}.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+let urlParams = new URLSearchParams(window.location.search);
+let pname = urlParams.get('name');
+document.getElementById('myName').innerHTML = pname;
+
+socket.on("connect", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const url = `http://localhost:4000/chat/${name}`;
+    fetch(url, { method: "GET" })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            data.forEach(element => {
+                let friends = document.createElement('span');
+                friends.innerHTML += `
+                                    <div class="d-flex flex-row justify-content-end my-4">
+                                        <div>
+                                            <p class="small text-end text-dark fw-bold text-capitalize">${element.username}</p>
+                                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary px-5 py-4">${element.message}</p>
+                                        </div>
+                                    </div>
             `;
 
-            document.getElementById('friendListing').appendChild(friends);
-        });
-    })
+                document.getElementById('messages').appendChild(friends);
+            });
+        })
 });
+
+socket.on("chat", (data) => {
+    const { username, message } = data;
+    const span = document.createElement("p");
+    span.innerHTML = `<div class="d-flex flex-row justify-content-end">
+        <div>
+            <p class="small text-end text-dark fw-bold text-capitalize ">${username}</p>
+            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary px-5 py-4">${message}</p>
+        </div>
+    </div>`;
+
+    document.querySelector("#messages").appendChild(span);
+});
+document.querySelector("#send").addEventListener("click", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const msg = document.querySelector("#message").value;
+    if(msg != ''){
+        socket.emit("chat", { username: name, message: msg });
+        document.querySelector("#message").value = '';
+    }
+});
+
