@@ -22,7 +22,7 @@ app.use(express.static("chat_system"));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/chat_system/index.html");
+    res.sendFile(__dirname + "/chat_system/authentication/index.html");
 });
 
 app.get("/login", (req, res) => {

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to our Chatester</title>
+    <link rel="icon" href="/authentication/assets/logo.png" type="image/gif" sizes="16x16">
     <link rel="stylesheet" href="/authentication/assets/bootstrap.css">
     <link rel="stylesheet" href="/authentication/assets/masterhead.css">
 </head>
@@ -13,22 +14,22 @@
     <div class="container-fluid masthead">
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="col-4 border border-2 rounded p-5 bg-white">
-                <h6 class="text-center py-1 pb-4" style="font-size: 2rem;">Welcome to Chatester</h6>
+                <h6 class="text-center py-1 pb-4" style="font-size: 2rem;">Welcome to <span class="fw-bold text-success">Chatester</span></h6>
                 <form action="/login" method="POST">
                     <div class="form-outline mb-4">
-                        <label class="" for="form2Example1">Username</label>
-                        <input type="text" id="username" class="form-control" placeholder="Enter Username"/>
+                        <label class="text-success fst-italic fw-bold" for="form2Example1">Username</label>
+                        <input type="text" id="username" class="form-control text-success" placeholder="Enter Username"/>
                     </div>
     
                     <div class="form-outline mb-4">
-                        <label class="" for="form2Example2">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Enter Password"/>
+                        <label class="text-success fst-italic fw-bold" for="form2Example2">Password</label>
+                        <input type="password" id="password" class="form-control text-success" placeholder="Enter Password"/>
                     </div>
     
-                    <button type="submit" id="loginbtn" class="btn btn-primary btn-block mb-4 col-12">Sign in</button>
+                    <button type="submit" id="loginbtn" class="btn btn-success btn-block mb-4 col-12">Sign in</button>
     
                     <div class="text-center">
-                        <p>Not a member? <a href="/register">Register</a></p>
+                        <p>Not a member? <a href="/register" class=" text-success">Register</a></p>
                     </div>
                 </form>
             </div>

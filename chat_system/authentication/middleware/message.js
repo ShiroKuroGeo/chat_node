@@ -20,7 +20,7 @@ socket.on("connect", () => {
                                     <div class="d-flex flex-row justify-content-end my-4">
                                         <div>
                                             <p class="small text-end text-dark fw-bold text-capitalize">${element.username}</p>
-                                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary px-5 py-4">${element.message}</p>
+                                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-success fs-5 px-5 py-4">${element.message}</p>
                                         </div>
                                     </div>
             `;
@@ -36,7 +36,7 @@ socket.on("chat", (data) => {
     span.innerHTML = `<div class="d-flex flex-row justify-content-end">
         <div>
             <p class="small text-end text-dark fw-bold text-capitalize ">${username}</p>
-            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary px-5 py-4">${message}</p>
+            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-success fs-5 px-5 py-4">${message}</p>
         </div>
     </div>`;
 
